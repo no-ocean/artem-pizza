@@ -1,6 +1,7 @@
 {
   "name": "artem-pizza",
   "version": "0.1.0",
+  "description": "Online pizzeria with variety of toppings to choose and possibility to make an order",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
