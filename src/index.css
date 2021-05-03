@@ -11,3 +11,77 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* TEMPORARY STYLES */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 12px 18px;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.btn-primary {
+  background: #64b895;
+  color: #fff;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-h-center {
+  justify-content: center;
+}
+
+.flex-v-center {
+  align-items: center;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.row {
+  display: flex;
+  margin: 0 -15px;
+}
+
+.col {
+  padding: 0 15px;
+}
+
+.mr-10 {
+  margin-right: 10px;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.mb-20 {
+  margin-bottom: 20px
+}
+
+.mb-30 {
+  margin-bottom: 30px
+}
+
+.checkbox {
+  border-radius: 8px;
+  border: 2px solid #64b895;
+  padding: 4px;
+  width: 106px;
+}
