@@ -85,3 +85,28 @@ code {
   padding: 4px;
   width: 106px;
 }
+
+.ingridient {
+  color: #333;
+  padding-right: 6px;
+  padding-left: 12px;
+  position: relative;
+}
+
+.ingridient:before {
+  content: '';
+  background: #333;
+  border-radius: 50%;
+  width: 4px;
+  height: 4px;
+  position: absolute;
+  top: 10px;
+  left: 4px;
+}
+
+.ingridient:first-of-type {
+  padding-left: 0;
+}
+.ingridient:first-of-type:before {
+  display: none
+}
