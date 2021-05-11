@@ -1,152 +1,147 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import RadioGroup from "./RadioGroup";
 import CheckboxGroup from "./CheckboxGroup";
+import Order from "./Order";
 
-const dataPizzaSizes = [
-    {
-        name: "size",
-        val: 30,
-        label : "30 см",
-        isChecked: true
-    },
-    {
-        name: "size",
-        val: 35,
-        label : "35 см",
+const Configurator = ({dataConfig}) => {
+
+    const { size, dough, sauces, cheese, vegetables, meat } = dataConfig;
+
+    const DEFAULT_PRICE = 200;
+
+    const [order, setOrder] = useState({
+        size: "30 см",
+        dough: "Тонкое",
+        sauces: "Томатный",
+        cheese: ["Моцарелла"],
+        vegetables: ["Помидоры"],
+        meat: ["Бекон"],
+        sizePrice: 0,
+        doughPrice: 0,
+        saucesPrice: 0,
+        cheesePrice: 29,
+        vegetablesPrice: 29,
+        meatPrice: 29
+    });
+
+    const [totalPrice, setTotalPrice] = useState(DEFAULT_PRICE);
+
+    useEffect(() => {
+        setTotalPrice(DEFAULT_PRICE + order.sizePrice + order.doughPrice + order.saucesPrice + order.cheesePrice + order.vegetablesPrice + order.meatPrice);   
+    }, [order.sizePrice, order.doughPrice, order.saucesPrice, order.cheesePrice, order.vegetablesPrice, order.meatPrice]);
+
+    const [orderFlag, setOrderFlag] = useState(false);
+
+    const handleRadio = (event) => {
+        const radio = event.target;
+        const priceGroup = radio.name + "Price";
+        const radioPrice = radio.getAttribute("data-price");
+
+        setOrder({
+            ...order,
+            [radio.name]: radio.value,
+            [priceGroup]: +radioPrice
+        });
+    };
+
+    const handleCheckbox = (event) => {
+        const checkbox = event.target;
+        const priceGroup = checkbox.name + "Price";
+        const itemPrice = checkbox.getAttribute("data-price");
+        const totalPrice = order[priceGroup];
+
+        const idx = order[checkbox.name].findIndex(el => el === checkbox.value);
+        if (idx === -1) {
+            const newArr = [...order[checkbox.name], checkbox.value];
+            setOrder({
+                ...order,
+                [checkbox.name]: newArr,
+                [priceGroup]: +totalPrice + +itemPrice
+            });
+        } else {
+            const before = order[checkbox.name].slice(0, idx),
+                  after = order[checkbox.name].slice(idx+1);
+            const newArr = [...before, ...after];
+            setOrder({
+                ...order,
+                [checkbox.name]: newArr,
+                [priceGroup]: +totalPrice - +itemPrice
+            });
+        }
     }
-]
 
-const dataPizzaDough = [
-    {
-        name: "dough",
-        val: "thin",
-        label : "Тонкое",
-        isChecked: true
-    },
-    {
-        name: "dough",
-        val: "thick",
-        label : "Толстое",
+    const handleSubmit = (event) => {
+        event.preventDefault();
+    };
+
+    const flagToggle = () => {
+        setOrderFlag(!orderFlag);
     }
-]
-
-const dataPizzaSauces = [
-    {
-        name: "sauces",
-        val: "tomato",
-        label: "Томатный",
-        isChecked: true
-    },
-    {
-        name: "sauces",
-        val: "mayonnaise",
-        label: "Майонез"
-    },
-    {
-        name: "sauces",
-        val: "spicy",
-        label: "Острый"
-    },
-    {
-        name: "sauces",
-        val: "mushroom",
-        label: "Грибной"
-    }
-];
-
-const dataPizzaCheese = [
-    {
-        name: "cheese",
-        val: "mozzarella",
-        label: "Моцарелла",
-        price: 29,
-        isChecked: true
-    },
-    {
-        name: "cheese",
-        val: "cheddar",
-        label: "Чеддер",
-        price: 29
-    },
-    {
-        name: "cheese",
-        val: "dor_blue",
-        label: "Дор Блю",
-        price: 29
-    }
-];
-
-const dataPizzaVegetables = [
-    {
-        name: "vegetables",
-        val: "tomatoes",
-        label: "Помидоры",
-        price: 29,
-        isChecked: true
-    },
-    {
-        name: "vegetables",
-        val: "mushrooms",
-        label: "Грибы",
-        price: 29
-    },
-    {
-        name: "vegetables",
-        val: "pepper",
-        label: "Перец",
-        price: 29
-    }
-];
-
-const dataPizzaMeat = [
-    {
-        name: "meat",
-        val: "bacon",
-        label: "Бекон",
-        price: 29,
-        isChecked: true
-    },
-    {
-        name: "meat",
-        val: "pepperoni",
-        label: "Пепперони",
-        price: 29
-    },
-    {
-        name: "meat",
-        val: "ham",
-        label: "Ветчина",
-        price: 29
-    }
-];
-
-const Configurator = () => {
 
     return (
         <>
-            <form>
+            { !orderFlag ? 
+            <form onSubmit={handleSubmit}>
                 <div className="row mb-30">
-                    <RadioGroup label={"Размер"} data={dataPizzaSizes} />
-                    <RadioGroup label={"Тесто"} data={dataPizzaDough} />
+                    <RadioGroup 
+                        title={size.title}
+                        data={size.data}
+                        order={order}
+                        onChange={handleRadio}
+                    />
+                    <RadioGroup 
+                        title={dough.title}
+                        data={dough.data}
+                        order={order}
+                        onChange={handleRadio}
+                    />
                 </div>
                 <div className="row mb-30">
-                    <RadioGroup label={"Выберите соус"} data={dataPizzaSauces} />
+                    <RadioGroup 
+                        title={sauces.title}
+                        data={sauces.data}
+                        order={order}
+                        onChange={handleRadio}
+                    />
                 </div>
                 <div className="row mb-30">
-                    <CheckboxGroup label={"Добавьте сыр"} data={dataPizzaCheese} />
+                    <CheckboxGroup 
+                        title={cheese.title}
+                        data={cheese.data}
+                        order={order}
+                        onChange={handleCheckbox}
+                    />
                 </div>
                 <div className="row mb-30">
-                    <CheckboxGroup label={"Добавьте овощи"} data={dataPizzaVegetables} />
+                    <CheckboxGroup 
+                        title={vegetables.title}
+                        data={vegetables.data}
+                        order={order}
+                        onChange={handleCheckbox}
+                    />
                 </div>
                 <div className="row mb-30">
-                    <CheckboxGroup label={"Добавьте мясо"} data={dataPizzaMeat} />
+                    <CheckboxGroup 
+                        title={meat.title}
+                        data={meat.data}
+                        order={order}
+                        onChange={handleCheckbox}
+                    />
                 </div>
                 <div className="row flex">
                     <div className="col">
-                        <button className="btn btn-primary">Заказать</button>
+                        <button className="btn btn-primary" onClick={flagToggle}>Заказать за {totalPrice} руб</button>
                     </div>
                 </div>
+
             </form>
+            :    
+            <Order 
+                order={order}
+                totalPrice={totalPrice} 
+                onBack={flagToggle}
+            />
+            }
         </>
     );
 }
