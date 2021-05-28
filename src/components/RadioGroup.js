@@ -4,7 +4,7 @@ import RadioButton from "./RadioButton";
 const RadioGroup = ({title, data, order, onChange}) => {
    
     const radioItems = data.map((item) => {
-        let id = Math.floor(Math.random() * 1000000);
+        const { id } = item;
         return <RadioButton key={id} itemConfig={item} order={order}/>
     });
 
