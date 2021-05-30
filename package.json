@@ -4,6 +4,8 @@
   "description": "Online pizzeria with variety of toppings to choose and possibility to make an order",
   "private": true,
   "dependencies": {
+    "@sentry/react": "^6.4.1",
+    "@sentry/tracing": "^6.4.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",

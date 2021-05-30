@@ -158,6 +158,8 @@ const App = () => {
 		<div className="App">
 			<h1>Собери свою пиццу</h1>
 			<Configurator dataConfig={dataConfig}/>
+			<hr />
+			<button onClick={methodDoesNotExist}>Break the world</button>;
 		</div>
 	);
 }
