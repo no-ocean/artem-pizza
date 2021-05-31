@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
-import RadioGroup from "./RadioGroup";
-import CheckboxGroup from "./CheckboxGroup";
-import Order from "./Order";
+import RadioGroup from "../RadioGroup";
+import CheckboxGroup from "../CheckboxGroup";
+import Order from "../Order";
 
 const Configurator = ({dataConfig}) => {
 
@@ -128,7 +128,7 @@ const Configurator = ({dataConfig}) => {
                         onChange={handleCheckbox}
                     />
                 </div>
-                <div className="row flex">
+                <div className="row flex mb-30">
                     <div className="col">
                         <button className="btn btn-primary" onClick={flagToggle}>Заказать за {totalPrice} руб</button>
                     </div>

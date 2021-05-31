@@ -26,7 +26,7 @@ const Order = ({order, totalPrice, onBack}) => {
                 { ingridients(meat) }
             </div>
             <h3 className="mb-30">Сумма заказа: {totalPrice} &#8381;</h3>
-            <button className="btn btn-primary" onClick={onBack}> К странице заказа</button>
+            <button className="btn btn-primary mb-30" onClick={onBack}> К странице заказа</button>
         </div>
     );
 }

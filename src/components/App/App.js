@@ -1,5 +1,6 @@
 import React from "react";
-import Configurator from "./Configurator"
+import Configurator from "../Configurator";
+import { BrowserRouter, Route, Link, Switch } from "react-router-dom";
 
 const dataConfig = {
 	size: {
@@ -158,8 +159,7 @@ const App = () => {
 		<div className="App">
 			<h1>Собери свою пиццу</h1>
 			<Configurator dataConfig={dataConfig}/>
-			<hr />
-			<button onClick={() => {throw new Error("Something went wrong!")}}>Break the world</button>;
+			<button className="btn btn-error mb-30" onClick={() => {throw new Error("Something went wrong!")}}>Break the world</button>
 		</div>
 	);
 }
