@@ -1,6 +1,9 @@
 import React from "react";
 import Configurator from "../Configurator";
-import { BrowserRouter, Route, Link, Switch } from "react-router-dom";
+import Registration from "../Registration";
+import Login from "../Login";
+import PageNotFound from "../PageNotFound";
+import { Route, Link, Switch } from "react-router-dom";
 
 const dataConfig = {
 	size: {
@@ -157,9 +160,27 @@ const dataConfig = {
 const App = () => {
 	return (
 		<div className="App">
+			<nav className="mb-30">
+				<Link className="mr-10" to="/">App</Link>
+				<Link className="mr-10" to="/registration">Registration</Link>
+				<Link className="mr-10" to="/login">Login</Link>
+			</nav>
 			<h1>Собери свою пиццу</h1>
-			<Configurator dataConfig={dataConfig}/>
-			<button className="btn btn-error mb-30" onClick={() => {throw new Error("Something went wrong!")}}>Break the world</button>
+			<Switch>
+				<Route path="/login">
+					<Login />
+				</Route>
+				<Route path="/registration">
+					<Registration />
+				</Route>
+				<Route exact path="/">
+					<Configurator dataConfig={dataConfig}/>
+				</Route>
+				<Route>
+					<PageNotFound />
+				</Route>
+			</Switch>
+			<button className="btn btn-error mb-30" onClick={() => {throw new Error("Something went wrong!")}}>Break the world</button>	
 		</div>
 	);
 }
