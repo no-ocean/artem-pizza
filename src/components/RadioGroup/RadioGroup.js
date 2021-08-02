@@ -1,17 +1,25 @@
 import React from "react";
 import RadioButton from "../RadioButton";
 
-const RadioGroup = ({title, data, order, onChange}) => {
+const RadioGroup = ({title, data, register}) => {
+
+    let radioItems = [];
+
+    for (let key in data) {
+        const item = data[key];
+        const { id } = data[key];
+        radioItems.push(<RadioButton key={id} itemConfig={item} register={register}/>);
+    }
    
-    const radioItems = data.map((item) => {
-        const { id } = item;
-        return <RadioButton key={id} itemConfig={item} order={order}/>
-    });
+    // const radioItems = data.map((item) => {
+    //     const { id } = item;
+    //     return <RadioButton key={id} itemConfig={item} register={register}/>
+    // });
 
     return (
         <div className="col flex flex-col">
             <span className="mb-10">{title}</span>
-            <div className="flex radiogroup" onChange={onChange}>
+            <div className="flex radiogroup">
                 { radioItems }
             </div>
         </div>

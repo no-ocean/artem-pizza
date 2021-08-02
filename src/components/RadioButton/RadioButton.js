@@ -1,6 +1,6 @@
 import React from "react";
 
-const RadioButton = ({itemConfig, order}) => {
+const RadioButton = ({itemConfig, register}) => {
     
     const { name, val, label, price } = itemConfig; 
 
@@ -10,10 +10,9 @@ const RadioButton = ({itemConfig, order}) => {
                 <span>{label}</span>
                 <input
                     type="radio" 
-                    name={name} 
                     value={val}
-                    defaultChecked={order[name] === val}
                     data-price={price}
+                    {...register(name)}
                 />
             </label>
         </div>
