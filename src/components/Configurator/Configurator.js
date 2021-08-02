@@ -1,147 +1,211 @@
-import React, {useState, useEffect} from "react";
-import RadioGroup from "../RadioGroup";
+import React, {useState, useEffect, useContext} from "react";
 import CheckboxGroup from "../CheckboxGroup";
-import Order from "../Order";
+import { useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
+import { ConfigContext } from "../../helpers/ConfigContext";
+import { calculatePrice } from "../../helpers/calculatePrice";
+import { getData } from "../../helpers/api";
 
-const Configurator = ({dataConfig}) => {
+const Configurator = () => {
 
-    const { size, dough, sauces, cheese, vegetables, meat } = dataConfig;
+    const [data, setData] = useState();
+    const [error, setError] = useState();
+    const [isLoading, setIsLoading] = useState(true);
 
-    const DEFAULT_PRICE = 200;
-
-    const [order, setOrder] = useState({
-        size: "30 см",
-        dough: "Тонкое",
-        sauces: "Томатный",
-        cheese: ["Моцарелла"],
-        vegetables: ["Помидоры"],
-        meat: ["Бекон"],
-        sizePrice: 0,
-        doughPrice: 0,
-        saucesPrice: 0,
-        cheesePrice: 29,
-        vegetablesPrice: 29,
-        meatPrice: 29
-    });
-
-    const [totalPrice, setTotalPrice] = useState(DEFAULT_PRICE);
+    const history = useHistory();
+    const [context, setContext] = useContext(ConfigContext);
 
     useEffect(() => {
-        setTotalPrice(DEFAULT_PRICE + order.sizePrice + order.doughPrice + order.saucesPrice + order.cheesePrice + order.vegetablesPrice + order.meatPrice);   
-    }, [order.sizePrice, order.doughPrice, order.saucesPrice, order.cheesePrice, order.vegetablesPrice, order.meatPrice]);
-
-    const [orderFlag, setOrderFlag] = useState(false);
-
-    const handleRadio = (event) => {
-        const radio = event.target;
-        const priceGroup = radio.name + "Price";
-        const radioPrice = radio.getAttribute("data-price");
-
-        setOrder({
-            ...order,
-            [radio.name]: radio.value,
-            [priceGroup]: +radioPrice
-        });
-    };
-
-    const handleCheckbox = (event) => {
-        const checkbox = event.target;
-        const priceGroup = checkbox.name + "Price";
-        const itemPrice = checkbox.getAttribute("data-price");
-        const totalPrice = order[priceGroup];
-
-        const idx = order[checkbox.name].findIndex(el => el === checkbox.value);
-        if (idx === -1) {
-            const newArr = [...order[checkbox.name], checkbox.value];
-            setOrder({
-                ...order,
-                [checkbox.name]: newArr,
-                [priceGroup]: +totalPrice + +itemPrice
-            });
-        } else {
-            const before = order[checkbox.name].slice(0, idx),
-                  after = order[checkbox.name].slice(idx+1);
-            const newArr = [...before, ...after];
-            setOrder({
-                ...order,
-                [checkbox.name]: newArr,
-                [priceGroup]: +totalPrice - +itemPrice
-            });
+        const loadData = async () => {
+            try {
+                const json = await getData("ingredients");
+                const normalizeJson = json.reduce((acc, item) => {
+                    acc[item.slug] = item;
+                    return acc;
+                }, {})
+                setData(normalizeJson);
+                setIsLoading(false);              
+            } catch (error) {
+                setError(error);
+                setIsLoading(false);
+            }
         }
+        loadData();
+    },[]);
+
+    const { register, handleSubmit, watch } = useForm({
+        defaultValues: {
+            size: "30",
+            dough: "thin",
+            sauces: "tomato",
+            cheese: ["cheddar"],
+            vegetables: ["broccoli"],
+            meat: ["bacon"]
+        }
+    });
+
+    const values = watch();
+
+    if(isLoading) {
+        return <h1>LOADING...</h1>
     }
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
+    if(error) {
+        return <h1>ERROR: {error.message}</h1>
+    }
+
+    let finalPrice = calculatePrice(data, values, 200)
+    
+    const groupData = (groupName) => {
+        return Object.values(data).filter((item) => {
+            return item.category === groupName;
+        });
+    }
+
+    const onSubmit = (orderData) => {
+        setContext({orderData, finalPrice});
+        history.push("/order");
     };
-
-    const flagToggle = () => {
-        setOrderFlag(!orderFlag);
-    }
 
     return (
         <>
-            { !orderFlag ? 
-            <form onSubmit={handleSubmit}>
+            <p>{JSON.stringify(data)}</p>
+            <hr/>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row mb-30">
-                    <RadioGroup 
-                        title={size.title}
-                        data={size.data}
-                        order={order}
-                        onChange={handleRadio}
-                    />
-                    <RadioGroup 
-                        title={dough.title}
-                        data={dough.data}
-                        order={order}
-                        onChange={handleRadio}
-                    />
+                    <div className="col flex flex-col">
+                        <span className="mb-10">Выберите размер: </span>
+                        <div className="flex radiogroup">
+                            <div className="radio mr-10">
+                                <label className="flex flex-v-center">
+                                    <span>30 см</span>
+                                    <input
+                                        type="radio" 
+                                        value={30}
+                                        data-price={0}
+                                        {...register("size")}
+                                    />
+                                </label>
+                            </div>
+                            <div className="radio mr-10">
+                                <label className="flex flex-v-center">
+                                    <span>35 см</span>
+                                    <input
+                                        type="radio" 
+                                        value={35}
+                                        data-price={50}
+                                        {...register("size")}
+                                    />
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col flex flex-col">
+                        <span className="mb-10">Выберите тесто: </span>
+                        <div className="flex radiogroup">
+                            <div className="radio mr-10">
+                                <label className="flex flex-v-center">
+                                    <span>Тонкое</span>
+                                    <input
+                                        type="radio" 
+                                        value={"thin"}
+                                        data-price={0}
+                                        {...register("dough")}
+                                    />
+                                </label>
+                            </div>
+                            <div className="radio mr-10">
+                                <label className="flex flex-v-center">
+                                    <span>Пышное</span>
+                                    <input
+                                        type="radio" 
+                                        value={"lush"}
+                                        data-price={0}
+                                        {...register("dough")}
+                                    />
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div className="row mb-30">
-                    <RadioGroup 
-                        title={sauces.title}
-                        data={sauces.data}
-                        order={order}
-                        onChange={handleRadio}
+                    <div className="col flex flex-col">
+                        <span className="mb-10">Выберите соус: </span>
+                        <div className="flex radiogroup">
+                            <div className="radio mr-10">
+                                <label className="flex flex-v-center">
+                                    <span>Томатный</span>
+                                    <input
+                                        type="radio" 
+                                        value={"tomato"}
+                                        data-price={0}
+                                        {...register("sauces")}
+                                    />
+                                </label>
+                            </div>
+                            <div className="radio mr-10">
+                                <label className="flex flex-v-center">
+                                    <span>Майонез</span>
+                                    <input
+                                        type="radio" 
+                                        value={"mayo"}
+                                        data-price={0}
+                                        {...register("sauces")}
+                                    />
+                                </label>
+                            </div>
+                            <div className="radio mr-10">
+                                <label className="flex flex-v-center">
+                                    <span>Острый</span>
+                                    <input
+                                        type="radio" 
+                                        value={"spicy"}
+                                        data-price={0}
+                                        {...register("sauces")}
+                                    />
+                                </label>
+                            </div>
+                            <div className="radio mr-10">
+                                <label className="flex flex-v-center">
+                                    <span>Грибной</span>
+                                    <input
+                                        type="radio" 
+                                        value={"mushroom"}
+                                        data-price={0}
+                                        {...register("sauces")}
+                                    />
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="row mb-30">
+                    <CheckboxGroup 
+                        title={"Добавьте сыр"}
+                        data={groupData("cheese")}
+                        register={register}
                     />
                 </div>
                 <div className="row mb-30">
                     <CheckboxGroup 
-                        title={cheese.title}
-                        data={cheese.data}
-                        order={order}
-                        onChange={handleCheckbox}
+                        title={"Добавьте овощи"}
+                        data={groupData("vegetables")}
+                        register={register}
                     />
                 </div>
                 <div className="row mb-30">
                     <CheckboxGroup 
-                        title={vegetables.title}
-                        data={vegetables.data}
-                        order={order}
-                        onChange={handleCheckbox}
-                    />
-                </div>
-                <div className="row mb-30">
-                    <CheckboxGroup 
-                        title={meat.title}
-                        data={meat.data}
-                        order={order}
-                        onChange={handleCheckbox}
+                        title={"Добавьте мясо"}
+                        data={groupData("meat")}
+                        register={register}
                     />
                 </div>
                 <div className="row flex mb-30">
                     <div className="col">
-                        <button className="btn btn-primary" onClick={flagToggle}>Заказать за {totalPrice} руб</button>
+                        <button className="btn btn-primary" >Заказать за {finalPrice} &#8381;</button>
                     </div>
                 </div>
-
             </form>
-            :    
-            <Order 
-                order={order}
-                totalPrice={totalPrice} 
-                onBack={flagToggle}
-            />
-            }
         </>
     );
 }
