@@ -9,3 +9,13 @@ export const getData = (value) => {
         }
     );
 }
+
+export const postData = (data, value) => {
+    return fetch(`http://localhost:4000/v1/${value}`, {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        },
+        body: JSON.stringify(data)
+    }).then(res => res.json());
+}

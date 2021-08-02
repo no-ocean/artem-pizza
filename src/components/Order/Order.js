@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ConfigContext } from "../../helpers/ConfigContext";
 import Check from "../Check";
 import { useForm } from "react-hook-form";
+import { postData } from "../../helpers/api";
 
 
 const Order = () => {
 
     const { register, handleSubmit } = useForm();
+    const [context] = useContext(ConfigContext);
+    const { orderData, finalPrice } = context;
+
+    const {size, dough, sauce, meat, vegetables, cheese} = orderData;
 
     const normalizeCardNumber = (value) => {
         return (
@@ -53,12 +59,30 @@ const Order = () => {
     const cardCVV = register("cardCVV");
     const cardName = register("cardName");
 
-    const onSubmit = (data) => {
-        alert(JSON.stringify(data));
+    const onSubmit = async (data) => {
+        const commonData = {
+            size,
+            dough,
+            sauce,
+            ingredients: [
+                ...meat, 
+                ...vegetables, 
+                ...cheese
+            ],
+            address: `${data.address}, подъезд: ${data.entrance}, этаж: ${data.floor}, квартира: ${data.flat}`,
+            name: data.cardName,
+            card_number: data.cardNumber,
+            price: finalPrice,
+        }
+
+        await postData(commonData, "orders")
+
+        alert(JSON.stringify(commonData));
     }
 
     return (
         <form className="row" onSubmit={handleSubmit(onSubmit)}>
+            <input type="hidden" value="" {...register("size")}/>
             <div className="col-6 sm-col-12">
                 <div className="form-section mb-20">
                     <div className="flex flex-col mb-30">
