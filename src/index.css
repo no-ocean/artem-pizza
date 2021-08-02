@@ -115,16 +115,16 @@ code {
   margin-bottom: 50px
 }
 
-.mw-70 {
-  max-width: 70px
+.mw-64 {
+  max-width: 64px
+}
+
+.mw-82 {
+  max-width: 82px
 }
 
 .mw-110 {
   max-width: 110px
-}
-
-.mw-102 {
-  max-width: 102px
 }
 
 .text-center {
