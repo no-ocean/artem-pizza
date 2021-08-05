@@ -2,17 +2,16 @@ import React from "react";
 
 const RadioButton = ({itemConfig, register}) => {
     
-    const { name, val, label, price } = itemConfig; 
+    const { name, slug, category } = itemConfig; 
 
     return (
         <div className="radio mr-10">
             <label className="flex flex-v-center">
-                <span>{label}</span>
+                <span>{name}</span>
                 <input
                     type="radio" 
-                    value={val}
-                    data-price={price}
-                    {...register(name)}
+                    value={slug}
+                    {...register(category)}
                 />
             </label>
         </div>
