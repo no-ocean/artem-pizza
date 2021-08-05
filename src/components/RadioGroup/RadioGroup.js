@@ -10,11 +10,6 @@ const RadioGroup = ({title, data, register}) => {
         const { id } = data[key];
         radioItems.push(<RadioButton key={id} itemConfig={item} register={register}/>);
     }
-   
-    // const radioItems = data.map((item) => {
-    //     const { id } = item;
-    //     return <RadioButton key={id} itemConfig={item} register={register}/>
-    // });
 
     return (
         <div className="col flex flex-col">
