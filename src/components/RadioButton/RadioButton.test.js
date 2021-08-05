@@ -1,16 +1,16 @@
 import { render , screen, fireEvent } from '@testing-library/react';
 import RadioButton from "./RadioButton";
 
-it("renders radio button with values and default check", () => {
-    const data = {name: "size", val: "30 см", label: "30 см", price: 0};
-    const order = {size: "30 см", sizePrice: 0};
+const testFn = jest.fn();
 
-    render(<RadioButton itemConfig={data} order={order}/>);
+it("renders radio button with data params and label", () => {
+    const data = {"name":"35 см","slug":"35","price":"50","category":"size"};
+    render(<RadioButton itemConfig={data} register={testFn}/>);
 
-    const input = screen.getByDisplayValue(/30 см/i);
+    const label = screen.getByText(/35 см/i);
+    const input = screen.getByDisplayValue(/35/i);
 
+    expect(label).toBeInTheDocument();
     expect(input).toBeInTheDocument();
-    expect(input.value).toBe("30 см");
-    expect(input.name).toBe("size");
-    expect(input).toBeChecked();
+    expect(input.value).toBe("35");
 });
