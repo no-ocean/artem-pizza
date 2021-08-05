@@ -1,4 +1,6 @@
 import React, {useState, useEffect, useContext} from "react";
+import { radioData } from "../../helpers/radioData";
+import RadioGroup from "../RadioGroup";
 import CheckboxGroup from "../CheckboxGroup";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
@@ -8,7 +10,7 @@ import { getData } from "../../helpers/api";
 
 const Configurator = () => {
 
-    const [data, setData] = useState();
+    const [data, setData] = useState({});
     const [error, setError] = useState();
     const [isLoading, setIsLoading] = useState(true);
 
@@ -23,7 +25,7 @@ const Configurator = () => {
                     acc[item.slug] = item;
                     return acc;
                 }, {})
-                setData(normalizeJson);
+                setData({...radioData, ...normalizeJson});
                 setIsLoading(false);              
             } catch (error) {
                 setError(error);
@@ -37,7 +39,7 @@ const Configurator = () => {
         defaultValues: {
             size: "30",
             dough: "thin",
-            sauces: "tomato",
+            sauces: "tomate",
             cheese: ["cheddar"],
             vegetables: ["broccoli"],
             meat: ["bacon"]
@@ -73,111 +75,23 @@ const Configurator = () => {
             <hr/>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row mb-30">
-                    <div className="col flex flex-col">
-                        <span className="mb-10">Выберите размер: </span>
-                        <div className="flex radiogroup">
-                            <div className="radio mr-10">
-                                <label className="flex flex-v-center">
-                                    <span>30 см</span>
-                                    <input
-                                        type="radio" 
-                                        value={30}
-                                        data-price={0}
-                                        {...register("size")}
-                                    />
-                                </label>
-                            </div>
-                            <div className="radio mr-10">
-                                <label className="flex flex-v-center">
-                                    <span>35 см</span>
-                                    <input
-                                        type="radio" 
-                                        value={35}
-                                        data-price={50}
-                                        {...register("size")}
-                                    />
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col flex flex-col">
-                        <span className="mb-10">Выберите тесто: </span>
-                        <div className="flex radiogroup">
-                            <div className="radio mr-10">
-                                <label className="flex flex-v-center">
-                                    <span>Тонкое</span>
-                                    <input
-                                        type="radio" 
-                                        value={"thin"}
-                                        data-price={0}
-                                        {...register("dough")}
-                                    />
-                                </label>
-                            </div>
-                            <div className="radio mr-10">
-                                <label className="flex flex-v-center">
-                                    <span>Пышное</span>
-                                    <input
-                                        type="radio" 
-                                        value={"lush"}
-                                        data-price={0}
-                                        {...register("dough")}
-                                    />
-                                </label>
-                            </div>
-                        </div>
-                    </div>
+                    <RadioGroup 
+                        title={"Выберите тесто"}
+                        data={groupData("size")}
+                        register={register}
+                    />
+                    <RadioGroup 
+                        title={"Выберите тесто"}
+                        data={groupData("dough")}
+                        register={register}
+                    />
                 </div>
                 <div className="row mb-30">
-                    <div className="col flex flex-col">
-                        <span className="mb-10">Выберите соус: </span>
-                        <div className="flex radiogroup">
-                            <div className="radio mr-10">
-                                <label className="flex flex-v-center">
-                                    <span>Томатный</span>
-                                    <input
-                                        type="radio" 
-                                        value={"tomato"}
-                                        data-price={0}
-                                        {...register("sauces")}
-                                    />
-                                </label>
-                            </div>
-                            <div className="radio mr-10">
-                                <label className="flex flex-v-center">
-                                    <span>Майонез</span>
-                                    <input
-                                        type="radio" 
-                                        value={"mayo"}
-                                        data-price={0}
-                                        {...register("sauces")}
-                                    />
-                                </label>
-                            </div>
-                            <div className="radio mr-10">
-                                <label className="flex flex-v-center">
-                                    <span>Острый</span>
-                                    <input
-                                        type="radio" 
-                                        value={"spicy"}
-                                        data-price={0}
-                                        {...register("sauces")}
-                                    />
-                                </label>
-                            </div>
-                            <div className="radio mr-10">
-                                <label className="flex flex-v-center">
-                                    <span>Грибной</span>
-                                    <input
-                                        type="radio" 
-                                        value={"mushroom"}
-                                        data-price={0}
-                                        {...register("sauces")}
-                                    />
-                                </label>
-                            </div>
-                        </div>
-                    </div>
+                    <RadioGroup 
+                        title={"Выберите соус"}
+                        data={groupData("sauces")}
+                        register={register}
+                    />
                 </div>
                 <div className="row mb-30">
                     <CheckboxGroup 
