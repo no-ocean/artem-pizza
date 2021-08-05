@@ -1,18 +1,16 @@
 import { render , screen } from '@testing-library/react';
 import Checkbox from "./Checkbox";
-import { useForm } from "react-hook-form";
 
-const { register, handleSubmit } = useForm();
+const testFn = jest.fn();
 
-it("renders checkbox button with values and default check", () => {
-    const data = {name: "cheese", val: "Моцарелла", label: "Моцарелла", price: 29};
-    
-    render(<Checkbox itemConfig={data} register={register}/>);
+it("renders checkbox button with data params and label", () => {
+    const data = {"name":"Моцарелла","slug":"mozarella","price":"100","category":"cheese"};
+    render(<Checkbox itemConfig={data} register={testFn}/>);
 
-    const input = screen.getByDisplayValue(/Моцарелла/i);
+    const label = screen.getByText(/Моцарелла/i);
+    const input = screen.getByDisplayValue(/mozarella/i);
 
+    expect(label).toBeInTheDocument();
     expect(input).toBeInTheDocument();
-    expect(input.value).toBe("Моцарелла");
-    expect(input.name).toBe("cheese");
-    expect(input).toBeChecked();
+    expect(input.value).toBe("mozarella");
 });
