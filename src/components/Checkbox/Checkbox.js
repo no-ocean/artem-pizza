@@ -12,8 +12,7 @@ const Checkbox = ({itemConfig, register}) => {
                     <span className="mr-10">{price} &#8381;</span>
                     <input 
                         type="checkbox" 
-                        value={slug} 
-                        data-price={price}
+                        value={slug}
                         {...register(category)}
                     />
                 </div>
