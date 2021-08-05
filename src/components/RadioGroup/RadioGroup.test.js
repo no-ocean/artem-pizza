@@ -30,10 +30,11 @@ describe("default rendering radiogroup", () => {
 });
 
 describe("events", () => {
-    it("should toggle radiobuttons", () => {
+    it("should check radiobutton", () => {
         const handleRadio = jest.fn();
     
         render(<RadioGroup title="Размер" data={data} register={testFn} onChange={handleRadio}/>);
+
         const radioButton = screen.getByDisplayValue(/35/i);
         expect(radioButton).not.toBeChecked();
     
