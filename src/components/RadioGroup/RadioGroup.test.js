@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import RadioGroup from "./RadioGroup";
 
-const testFn = jest.fn();
+const mockRegister = jest.fn();
 
 const data = [
     { "id": 1, "category": "size", "name": "30 см", "slug": "30", "price": "0" },
@@ -10,30 +10,28 @@ const data = [
 
 describe("default rendering radiogroup", () => {
     it("should render radiogroup component", () => {   
-        render(<RadioGroup title="Размер" data={data} register={testFn}/>);
+        render(<RadioGroup title="Размер" data={data} register={mockRegister}/>);
         const radioGroup = screen.getByText(/размер/i);
         expect(radioGroup).toBeInTheDocument();
     });
     
     it("should not be default checked 30 radiobutton", () => {
-        render(<RadioGroup title="Размер" data={data} register={testFn}/>);
+        render(<RadioGroup title="Размер" data={data} register={mockRegister}/>);
         const radioButton = screen.getByDisplayValue(/30/i);
         expect(radioButton).not.toBeChecked();
     });
     
     it("should not be default checked 35 radiobutton", () => {
-        render(<RadioGroup title="Размер" data={data} register={testFn}/>);
+        render(<RadioGroup title="Размер" data={data} register={mockRegister}/>);
         const radioButton = screen.getByDisplayValue(/35/i);
         expect(radioButton).not.toBeChecked();
     });
     
 });
 
-describe("events", () => {
-    it("should check radiobutton", () => {
-        const handleRadio = jest.fn();
-    
-        render(<RadioGroup title="Размер" data={data} register={testFn} onChange={handleRadio}/>);
+describe("radiobutton event", () => {
+    it("should check radiobutton", () => {    
+        render(<RadioGroup title="Размер" data={data} register={mockRegister}/>);
 
         const radioButton = screen.getByDisplayValue(/35/i);
         expect(radioButton).not.toBeChecked();
