@@ -1,0 +1,1 @@
+export const isRegistered = (state) => state.registration;

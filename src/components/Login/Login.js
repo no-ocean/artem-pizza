@@ -1,11 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { setLogin } from "../../state/login/actions";
 
 const Login = () => {
+    const dispatch = useDispatch();
     const { register, handleSubmit } = useForm();
 
     const onSubmit = (data) => {
+        dispatch(setLogin(true));
         alert(JSON.stringify(data))
     };
 

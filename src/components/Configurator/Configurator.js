@@ -13,12 +13,12 @@ import { getIngredients, getIsLoading, getError } from "../../state/ingredients/
 
 const Configurator = () => {
 
+    const history = useHistory();
+    const dispatch = useDispatch(); 
+
     useEffect(() => {
         dispatch(fetchIngredients());
     }, []);
-    
-    const history = useHistory();
-    const dispatch = useDispatch(); 
 
     const data = useSelector(getIngredients);
     const isLoading = useSelector(getIsLoading);

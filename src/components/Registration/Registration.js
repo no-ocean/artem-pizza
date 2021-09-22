@@ -1,11 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { setRegistration } from "../../state/registration/actions";
 
 const Registration = () => {
+    const dispatch = useDispatch();
     const { register, handleSubmit } = useForm();
 
     const onSubmit = (data) => {
+        dispatch(setRegistration(true));
         alert(JSON.stringify(data));
     }
 
