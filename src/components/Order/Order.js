@@ -1,5 +1,6 @@
 import React from "react";
 import Check from "../Check";
+import { useHistory } from "react-router";
 import { useForm } from "react-hook-form";
 import { postData } from "../../helpers/api";
 import { useSelector } from "react-redux";
@@ -8,7 +9,7 @@ import { getPrice } from "../../state/price/selectors";
 
 
 const Order = () => {
-
+    const history = useHistory();
     const { register, handleSubmit } = useForm();
 
     const pizza = useSelector(getPizza);
@@ -78,9 +79,13 @@ const Order = () => {
             price: finalPrice,
         }
 
-        await postData(order, "orders")
-
-        alert(JSON.stringify(order));
+        try {
+            await postData(order, "orders").then(() => {
+                history.push("/success");
+            });
+        } catch (e) {
+            alert(e.message)
+        }
     }
 
     return (
@@ -192,7 +197,7 @@ const Order = () => {
             </div>
             <div className="col-6 sm-col-12">
                 <Check />
-                <button className="btn btn-primary mb-30">Оплатить</button>
+                <button className="btn btn-primary mb-30">Оплатить {finalPrice} &#8381;</button>
             </div>
         </form>
     );

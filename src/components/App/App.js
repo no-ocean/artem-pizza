@@ -5,6 +5,7 @@ import Login from "../Login";
 import Order from "../Order";
 import PageNotFound from "../PageNotFound";
 import { Route, Link, Switch } from "react-router-dom";
+import OrderSuccess from "../OrderSuccess/OrderSuccess";
 
 const App = () => {
 	return (
@@ -24,6 +25,9 @@ const App = () => {
 				</Route>
 				<Route path="/order">
 					<Order/>
+				</Route>
+				<Route path="/success">
+					<OrderSuccess />
 				</Route>
 				<Route exact path="/">
 					<Configurator />
