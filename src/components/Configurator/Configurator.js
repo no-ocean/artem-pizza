@@ -1,39 +1,28 @@
-import React, {useState, useEffect, useContext} from "react";
-import { radioData } from "../../helpers/radioData";
+import React, { useEffect } from "react";
 import RadioGroup from "../RadioGroup";
 import CheckboxGroup from "../CheckboxGroup";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-import { ConfigContext } from "../../helpers/ConfigContext";
 import { calculatePrice } from "../../helpers/calculatePrice";
-import { getData } from "../../helpers/api";
+import { useDispatch, useSelector } from "react-redux";
+import { setPizza } from "../../state/pizza/actions";
+import { setPrice } from "../../state/price/actions";
+import { fetchIngredients } from "../../state/ingredients/thunk";
+import { getIngredients, getIsLoading, getError } from "../../state/ingredients/selectors";
+
 
 const Configurator = () => {
 
-    const [data, setData] = useState({});
-    const [error, setError] = useState();
-    const [isLoading, setIsLoading] = useState(true);
-
-    const history = useHistory();
-    const [context, setContext] = useContext(ConfigContext);
-
     useEffect(() => {
-        const loadData = async () => {
-            try {
-                const json = await getData("ingredients");
-                const normalizeJson = json.reduce((acc, item) => {
-                    acc[item.slug] = item;
-                    return acc;
-                }, {})
-                setData({...radioData, ...normalizeJson});
-                setIsLoading(false);              
-            } catch (error) {
-                setError(error);
-                setIsLoading(false);
-            }
-        }
-        loadData();
-    },[]);
+        dispatch(fetchIngredients());
+    }, []);
+    
+    const history = useHistory();
+    const dispatch = useDispatch(); 
+
+    const data = useSelector(getIngredients);
+    const isLoading = useSelector(getIsLoading);
+    const error = useSelector(getError);
 
     const { register, handleSubmit, watch } = useForm({
         defaultValues: {
@@ -44,35 +33,34 @@ const Configurator = () => {
             vegetables: ["broccoli"],
             meat: ["bacon"]
         }
-    });
+    });  
 
-    const values = watch();
-
-    if(isLoading) {
+    if(isLoading || !data) {
         return <h1>LOADING...</h1>
     }
 
-    if(error) {
+    if(error.name === "Error") {
         return <h1>ERROR: {error.message}</h1>
     }
 
-    let finalPrice = calculatePrice(data, values, 200)
-    
+    const values = watch();
+
     const groupData = (groupName) => {
         return Object.values(data).filter((item) => {
             return item.category === groupName;
         });
     }
 
-    const onSubmit = (orderData) => {
-        setContext({orderData, finalPrice});
+    let finalPrice = calculatePrice(data, values, 200)
+
+    const onSubmit = (formData) => {
+        dispatch(setPizza(formData));
+        dispatch(setPrice(finalPrice));
         history.push("/order");
     };
 
     return (
         <>
-            <p>{JSON.stringify(data)}</p>
-            <hr/>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row mb-30">
                     <RadioGroup 

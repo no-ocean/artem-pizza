@@ -1,12 +1,14 @@
-import React, {useContext} from "react";
-import { ConfigContext } from "../../helpers/ConfigContext";
+import React from "react";
+import { useSelector } from "react-redux";
+import { getPizza } from "../../state/pizza/selectors";
+import { getPrice } from "../../state/price/selectors";
 
-const Check = () => {
+const Check = () => { 
 
-    const [context] = useContext(ConfigContext);
-    const { orderData, finalPrice } = context;
+    const pizza = useSelector(getPizza)
+    const finalPrice = useSelector(getPrice);
     
-    const { size, dough, sauces, cheese, vegetables, meat } = orderData;
+    const { size, dough, sauces, cheese, vegetables, meat } = pizza;
 
     const ingridients = (ingridient) => {
         if (ingridient) {

@@ -1,17 +1,20 @@
-import React, { useContext } from "react";
-import { ConfigContext } from "../../helpers/ConfigContext";
+import React from "react";
 import Check from "../Check";
 import { useForm } from "react-hook-form";
 import { postData } from "../../helpers/api";
+import { useSelector } from "react-redux";
+import { getPizza } from "../../state/pizza/selectors";
+import { getPrice } from "../../state/price/selectors";
 
 
 const Order = () => {
 
     const { register, handleSubmit } = useForm();
-    const [context] = useContext(ConfigContext);
-    const { orderData, finalPrice } = context;
 
-    const {size, dough, sauce, meat, vegetables, cheese} = orderData;
+    const pizza = useSelector(getPizza);
+    const finalPrice = useSelector(getPrice);
+
+    const {size, dough, sauce, meat, vegetables, cheese} = pizza;
 
     const normalizeCardNumber = (value) => {
         return (
@@ -60,7 +63,7 @@ const Order = () => {
     const cardName = register("cardName");
 
     const onSubmit = async (data) => {
-        const commonData = {
+        const order = {
             size,
             dough,
             sauce,
@@ -75,9 +78,9 @@ const Order = () => {
             price: finalPrice,
         }
 
-        await postData(commonData, "orders")
+        await postData(order, "orders")
 
-        alert(JSON.stringify(commonData));
+        alert(JSON.stringify(order));
     }
 
     return (

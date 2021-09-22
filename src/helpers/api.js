@@ -1,5 +1,5 @@
 export const getData = (value) => {
-    return fetch(`http://localhost:4000/v1/${value}`).then(
+    return fetch(process.env.REACT_APP_BACKEND_HOST + value).then(
         (res) => {
             if(res.ok) {
                 return res.json();
@@ -11,7 +11,7 @@ export const getData = (value) => {
 }
 
 export const postData = (data, value) => {
-    return fetch(`http://localhost:4000/v1/${value}`, {
+    return fetch(process.env.REACT_APP_BACKEND_HOST + value, {
         method: "POST",
         headers: {
             "Content-type": "application/json; charset=UTF-8"
