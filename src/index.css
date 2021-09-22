@@ -12,6 +12,10 @@ code {
     monospace;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 /* TEMPORARY STYLES */
 .container {
   max-width: 1200px;
@@ -34,6 +38,24 @@ code {
   color: #fff;
 }
 
+.btn-error {
+  background: #e97f7f;
+  color: #fff;
+}
+
+.input {
+  border: 2px solid #cecece;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #1f1f33;
+  font-size: 16px;
+  padding: 14px 12px;
+}
+
+.input:focus-visible {
+  outline: none;
+}
+
 .flex {
   display: flex;
 }
@@ -54,13 +76,23 @@ code {
   justify-content: space-between;
 }
 
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
 .row {
   display: flex;
+  flex-wrap: wrap;
   margin: 0 -15px;
 }
 
 .col {
   padding: 0 15px;
+}
+
+.col-6 {
+  padding: 0 15px;
+  width: 50%;
 }
 
 .mr-10 {
@@ -77,6 +109,26 @@ code {
 
 .mb-30 {
   margin-bottom: 30px
+}
+
+.mb-50 {
+  margin-bottom: 50px
+}
+
+.mw-64 {
+  max-width: 64px
+}
+
+.mw-82 {
+  max-width: 82px
+}
+
+.mw-110 {
+  max-width: 110px
+}
+
+.text-center {
+  text-align: center;
 }
 
 .checkbox {
@@ -109,4 +161,23 @@ code {
 }
 .ingridient:first-of-type:before {
   display: none
+}
+
+.form-section {
+  max-width: 530px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #cecece;
+}
+.form-description {
+  max-width: 530px;
+}
+.check {
+  padding: 10px 24px;
+  border-radius: 16px;
+  box-shadow: 0 0 18px -1px #cecece;
+}
+@media (max-width: 540px) {
+  .sm-col-12 {
+    width: 100%;
+  }
 }
