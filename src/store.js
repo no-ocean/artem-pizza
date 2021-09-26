@@ -6,14 +6,17 @@ import { priceReducer } from "./state/price/reducer";
 import thunk from "redux-thunk";
 import { registrationReducer } from "./state/registration/reducer";
 import { loginReducer } from "./state/login/reducer";
+import { configureStore } from "@reduxjs/toolkit";
 
-export const store = createStore(
-    combineReducers({
+
+export const store = configureStore({
+    reducer: {
         ingredients: ingredientsReducer, 
         pizza: pizzaReducer,
         price: priceReducer,
         registration: registrationReducer,
         login: loginReducer
-    }),
-    composeWithDevTools(applyMiddleware(thunk))
-);
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
+    devTools: process.env.NODE_ENV !== "production"
+});

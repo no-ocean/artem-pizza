@@ -4,6 +4,7 @@
   "description": "Online pizzeria with variety of toppings to choose and possibility to make an order",
   "private": true,
   "dependencies": {
+    "@reduxjs/toolkit": "^1.6.1",
     "@sentry/react": "^6.4.1",
     "@sentry/tracing": "^6.4.1",
     "@testing-library/jest-dom": "^5.11.4",
