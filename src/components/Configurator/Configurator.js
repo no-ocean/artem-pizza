@@ -63,39 +63,45 @@ const Configurator = () => {
         <>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row mb-30">
-                    <RadioGroup 
-                        title={"Выберите тесто"}
-                        data={groupData("size")}
-                        register={register}
-                    />
-                    <RadioGroup 
-                        title={"Выберите тесто"}
-                        data={groupData("dough")}
-                        register={register}
-                    />
+                    <div className="">
+                        <RadioGroup 
+                            title={"Размер"}
+                            data={groupData("size")}
+                            register={register}
+                        />
+                    </div>
+                    <div className="">
+                        <RadioGroup 
+                            title={"Тесто"}
+                            data={groupData("dough")}
+                            register={register}
+                        />
+                    </div>
                 </div>
                 <div className="row mb-30">
-                    <RadioGroup 
-                        title={"Выберите соус"}
-                        data={groupData("sauces")}
-                        register={register}
-                    />
+                    <div className="">
+                        <RadioGroup 
+                            title={"Выберите соус"}
+                            data={groupData("sauces")}
+                            register={register}
+                        />
+                    </div>
                 </div>
-                <div className="row mb-30">
+                <div className="row mb-10">
                     <CheckboxGroup 
                         title={"Добавьте сыр"}
                         data={groupData("cheese")}
                         register={register}
                     />
                 </div>
-                <div className="row mb-30">
+                <div className="row mb-10">
                     <CheckboxGroup 
                         title={"Добавьте овощи"}
                         data={groupData("vegetables")}
                         register={register}
                     />
                 </div>
-                <div className="row mb-30">
+                <div className="row mb-10">
                     <CheckboxGroup 
                         title={"Добавьте мясо"}
                         data={groupData("meat")}

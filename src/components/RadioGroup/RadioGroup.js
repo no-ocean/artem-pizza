@@ -1,5 +1,6 @@
 import React from "react";
 import RadioButton from "../RadioButton";
+import "./RadioGroup.scss";
 
 const RadioGroup = ({title, data, register}) => {
 
@@ -11,10 +12,12 @@ const RadioGroup = ({title, data, register}) => {
         radioItems.push(<RadioButton key={id} itemConfig={item} register={register}/>);
     }
 
+    const classNames = `flex radiogroup ${radioItems.length > 2 ? "scroller" :""}`
+
     return (
-        <div className="col flex flex-col">
+        <div className="fieldset col flex flex-col">
             <span className="mb-10">{title}</span>
-            <div className="flex radiogroup">
+            <div className={classNames}>
                 { radioItems }
             </div>
         </div>

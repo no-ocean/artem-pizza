@@ -1,5 +1,6 @@
 import React from "react";
 import Checkbox from "../Checkbox";
+import "./CheckboxGroup.scss";
 
 const CheckboxGroup = ({title, data, register}) => {
 
@@ -11,10 +12,12 @@ const CheckboxGroup = ({title, data, register}) => {
         checkboxItems.push(<Checkbox key={id} itemConfig={item} register={register}/>);
     }
 
+    const classNames = `flex checkboxGroup ${checkboxItems.length > 2 ? "scroller" :""}`
+
     return (
-        <div className="col flex flex-col">
+        <div className="fieldset col flex flex-col">
             <span className="mb-10">{title}</span>
-            <div className="flex space-between checkboxGroup">
+            <div className={classNames}>
                 { checkboxItems }
             </div>
         </div>
