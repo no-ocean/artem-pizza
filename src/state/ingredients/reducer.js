@@ -28,4 +28,4 @@ export const ingredientsReducer = createReducer(initialState, (builder) => {
             return "loading"
         })
         .addDefaultCase((state) => state)
-})
+});

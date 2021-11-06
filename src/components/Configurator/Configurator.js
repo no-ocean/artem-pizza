@@ -13,109 +13,121 @@ import { getIngredients, getIsLoading, getError } from "../../state/ingredients/
 
 const Configurator = () => {
 
-    const history = useHistory();
-    const dispatch = useDispatch(); 
+	const history = useHistory();
+	const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(fetchIngredients());
-    }, []);
+	useEffect(() => {
+		dispatch(fetchIngredients());
+	}, []);
 
-    const data = useSelector(getIngredients);
-    const isLoading = useSelector(getIsLoading);
-    const error = useSelector(getError);
+	const data = useSelector(getIngredients);
+	const isLoading = useSelector(getIsLoading);
+	const error = useSelector(getError);
 
-    const { register, handleSubmit, watch } = useForm({
-        defaultValues: {
-            size: "30",
-            dough: "thin",
-            sauces: "tomate",
-            cheese: ["cheddar"],
-            vegetables: ["broccoli"],
-            meat: ["bacon"]
-        }
-    });  
+	const defaultPizza = {
+		size: "30",
+		dough: "thin",
+		sauces: "tomate",
+		cheese: ["cheddar"],
+		vegetables: ["broccoli"],
+		meat: ["bacon"]
+	}
 
-    if(isLoading || !data) {
-        return <h1>LOADING...</h1>
-    }
+	const { register, handleSubmit, watch } = useForm({
+		defaultValues: defaultPizza
+	});
 
-    if(error.name === "Error") {
-        return <h1>ERROR: {error.message}</h1>
-    }
+	if (isLoading || !data) {
+		return <h1>LOADING...</h1>
+	}
 
-    const values = watch();
+	if (error.name === "Error") {
+		return <h1>ERROR: {error.message}</h1>
+	}
 
-    const groupData = (groupName) => {
-        return Object.values(data).filter((item) => {
-            return item.category === groupName;
-        });
-    }
+	const values = watch();
+	console.log(values)
 
-    let finalPrice = calculatePrice(data, values, 200)
+	const groupData = (groupName) => {
+		return Object.values(data).filter((item) => {
+			return item.category === groupName;
+		});
+	}
 
-    const onSubmit = (formData) => {
-        dispatch(setPizza(formData));
-        dispatch(setPrice(finalPrice));
-        history.push("/order");
-    };
+	let finalPrice = calculatePrice(data, values, 200)
 
-    return (
-        <>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="row mb-30">
-                    <div className="">
-                        <RadioGroup 
-                            title={"Размер"}
-                            data={groupData("size")}
-                            register={register}
-                        />
-                    </div>
-                    <div className="">
-                        <RadioGroup 
-                            title={"Тесто"}
-                            data={groupData("dough")}
-                            register={register}
-                        />
-                    </div>
-                </div>
-                <div className="row mb-30">
-                    <div className="">
-                        <RadioGroup 
-                            title={"Выберите соус"}
-                            data={groupData("sauces")}
-                            register={register}
-                        />
-                    </div>
-                </div>
-                <div className="row mb-10">
-                    <CheckboxGroup 
-                        title={"Добавьте сыр"}
-                        data={groupData("cheese")}
-                        register={register}
-                    />
-                </div>
-                <div className="row mb-10">
-                    <CheckboxGroup 
-                        title={"Добавьте овощи"}
-                        data={groupData("vegetables")}
-                        register={register}
-                    />
-                </div>
-                <div className="row mb-10">
-                    <CheckboxGroup 
-                        title={"Добавьте мясо"}
-                        data={groupData("meat")}
-                        register={register}
-                    />
-                </div>
-                <div className="row flex mb-30">
-                    <div className="col">
-                        <button className="btn btn-primary" >Заказать за {finalPrice} &#8381;</button>
-                    </div>
-                </div>
-            </form>
-        </>
-    );
+	const onSubmit = (formData) => {
+		dispatch(setPizza(formData));
+		dispatch(setPrice(finalPrice));
+		history.push("/order");
+	};
+
+	return (
+		<>
+			<form className="row" onSubmit={handleSubmit(onSubmit)}>
+				<div className="col-xl-6">
+					<div className="row mb-30">
+						<div className="">
+							<RadioGroup
+								title={"Размер"}
+								data={groupData("size")}
+								register={register}
+							/>
+						</div>
+						<div className="">
+							<RadioGroup
+								title={"Тесто"}
+								data={groupData("dough")}
+								register={register}
+							/>
+						</div>
+					</div>
+					<div className="row mb-30">
+						<div className="">
+							<RadioGroup
+								title={"Выберите соус"}
+								data={groupData("sauces")}
+								register={register}
+							/>
+						</div>
+					</div>
+					<div className="row mb-10">
+						<CheckboxGroup
+							title={"Добавьте сыр"}
+							data={groupData("cheese")}
+							register={register}
+						/>
+					</div>
+					<div className="row mb-10">
+						<CheckboxGroup
+							title={"Добавьте овощи"}
+							data={groupData("vegetables")}
+							register={register}
+						/>
+					</div>
+					<div className="row mb-10">
+						<CheckboxGroup
+							title={"Добавьте мясо"}
+							data={groupData("meat")}
+							register={register}
+						/>
+					</div>
+				</div>
+				<div className="col-xl-6">
+					<div className="pizza">
+						<ul className="pizza__view">
+							<li><img src="./images/plate.png" alt="plate" /></li>
+						</ul>
+					</div>
+					<div className="row flex mb-30">
+						<div className="col">
+							<button className="btn btn-primary" >Заказать за {finalPrice} &#8381;</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</>
+	);
 }
 
 export default Configurator;

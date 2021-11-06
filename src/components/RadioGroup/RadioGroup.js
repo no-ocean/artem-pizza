@@ -1,6 +1,5 @@
 import React from "react";
 import RadioButton from "../RadioButton";
-import "./RadioGroup.scss";
 
 const RadioGroup = ({title, data, register}) => {
 

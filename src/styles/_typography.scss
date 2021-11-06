@@ -1,0 +1,22 @@
+html {
+	font-family: $main-font;
+	font-size: 62.5%;
+}
+
+body {
+	font-size: 1.2rem;
+	line-height: 1.5;
+	color: $main-color;
+}
+
+h1 {
+	font-size: 2.3rem;
+	line-height: 1.3;
+	color: $dark-color;
+}
+
+h2 {
+	font-size: 2rem;
+	line-height: 1.2;
+	color: $dark-color;
+}

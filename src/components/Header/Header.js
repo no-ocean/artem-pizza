@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
-import "./Header.scss";
 
 const Header = () => {
     return (
-        <div className="header">
+        <header className="header">
             <div className="container">
                 <nav className="navbar">
                     <Link to="/" className="logo mr-10">
@@ -14,7 +13,7 @@ const Header = () => {
                     <Link className="ml-a" to="/orders">Мои заказы</Link>
                 </nav>
             </div>
-        </div>
+        </header>
     )
 };
 

@@ -1,6 +1,5 @@
 import React from "react";
 import Checkbox from "../Checkbox";
-import "./CheckboxGroup.scss";
 
 const CheckboxGroup = ({title, data, register}) => {
 

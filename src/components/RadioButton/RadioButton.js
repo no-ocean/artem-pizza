@@ -1,5 +1,4 @@
 import React from "react";
-import "./RadioButton.scss";
 
 const RadioButton = ({itemConfig, register}) => {
     

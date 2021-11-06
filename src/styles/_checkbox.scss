@@ -1,0 +1,81 @@
+.checkbox {
+	border-radius: 10px;
+	height: 132px;
+	width: 106px;
+	flex-shrink: 0;
+	position: relative;
+	background: #FFFFFF;
+	box-shadow: 0px 8px 16px rgba(75, 75, 124, 0.05);
+
+	&__image {
+		margin: -12px auto 8px;
+		height: 65px;
+		overflow: hidden;
+		position: relative;
+		z-index: 5;
+	}
+
+	&__img {
+		max-width: 100%;
+		width: max-content;
+	}
+
+	&__title {
+		font-size: 14px;
+		text-align: center;
+		margin-bottom: 10px;
+	}
+
+	&__price {
+		font-weight: 700;
+	}
+
+	&__label {
+		border-radius: 10px;
+		border: 2px solid transparent;
+		cursor: pointer;
+		padding: 4px;
+		height: 100%;
+		width: 100%;
+	}
+
+	&__icon {
+		font: normal normal normal 24px/1 "Material Design Icons";
+		position: relative;
+		height: 24px;
+		width: 24px;
+		color: #e1e1ed;
+
+		&::before {
+			content: "\F131";
+		}
+	}
+
+	&__input {
+		/* reset appearance */
+		-webkit-appearance: none;
+		appearance: none;
+
+		position: absolute;
+		height: 1px;
+		clip: rect(0 0 0 0);
+		clip-path: inset(50%);
+		overflow: hidden;
+
+		&:checked+.checkbox__label {
+			border: 2px solid $main-green;
+
+			.checkbox__title {
+				font-weight: 700;
+			}
+
+			.checkbox__icon {
+				color: $main-green;
+
+				&::before {
+					content: "\F132";
+				}
+			}
+		}
+	}
+}
