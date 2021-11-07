@@ -15,7 +15,7 @@ const RadioGroup = ({title, data, register}) => {
 
     return (
         <div className="fieldset col flex flex-col">
-            <span className="mb-10">{title}</span>
+            <span className="fieldset__name mb-10">{title}</span>
             <div className={classNames}>
                 { radioItems }
             </div>

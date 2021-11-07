@@ -14,7 +14,6 @@ const App = () => {
 		<div className="App">
 			<Header />
 			<div className="container">
-				<h1>Собери свою пиццу</h1>
 				<Switch>
 					<Route path="/login">
 						<Login />

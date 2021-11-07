@@ -64,6 +64,7 @@ const Configurator = () => {
 
 	return (
 		<>
+			<h1 className="main-title">Собери свою пиццу</h1>
 			<form className="row" onSubmit={handleSubmit(onSubmit)}>
 				<div className="col-xl-6">
 					<div className="row mb-30">
