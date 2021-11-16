@@ -1,8 +1,10 @@
 import React from "react";
-import Check from "../Check";
+import IngredientsList from "../IngredientsList";
 
 const Result = () => {
     return(
-        <Check />
+        <div className="check mb-30">
+            <IngredientsList price={true}/>
+        </div>
     );
 }

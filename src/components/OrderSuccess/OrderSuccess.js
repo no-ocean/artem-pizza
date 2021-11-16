@@ -1,5 +1,5 @@
 import { useHistory } from "react-router";
-import Check from "../Check";
+import IngredientsList from "../IngredientsList";
 
 
 const OrderSuccess = () => {
@@ -28,7 +28,9 @@ const OrderSuccess = () => {
                     <h3>Спасибо за заказ!</h3>
                     <p className="mt-0">Заказ успешно оплачен, ждите вашу пиццу уже через час</p>
                     <div className="mt-30 mb-10" >
-                        <Check />
+                        <div className="check mb-30">
+                            <IngredientsList price={true}/>
+                        </div>
                     </div>
                     <button className="btn btn-primary" onClick={onClose}>OK</button>
                 </div>

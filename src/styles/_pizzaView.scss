@@ -1,0 +1,33 @@
+.configurator {
+	position: sticky;
+	top: 80px;
+	max-width: 320px;
+}
+
+.pizza {
+	margin-bottom: 2rem;
+
+	&__view {
+		max-width: max-content;
+		position: relative;
+		list-style: none;
+		padding-left: 0;
+	}
+
+	&__item {
+		width: max-content;
+		&_plate {
+			z-index: 1;
+		}
+		&_positioned {
+			margin-left: -4.2%;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+		&_dough {
+			z-index: 2;
+		}
+	}
+}

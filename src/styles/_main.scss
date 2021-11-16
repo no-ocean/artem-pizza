@@ -12,19 +12,24 @@
 	cursor: pointer;
 	padding: 12px 18px;
 	border-radius: 16px;
-	font-size: 16px;
-	font-weight: 600;
+	font-size: 2rem;
+	font-weight: 800;
+	font-family: "Nunito";
 	min-width: 100px;
+	transition: all 0.2s ease;
 }
 
 .btn-primary {
-	background: $main-green;
-	color: #fff;
+	background: $green-color;
+	color: $white;
+	&:hover {
+		background: darken($color: $green-color, $amount: 5);
+	}
 }
 
 .btn-error {
-	background: #e97f7f;
-	color: #fff;
+	background: $red-color;
+	color: $white;
 }
 
 .btn-close {
@@ -157,30 +162,41 @@
 	text-align: center;
 }
 
-.ingridient {
-	color: #333;
-	padding-right: 6px;
-	padding-left: 12px;
-	position: relative;
-}
+.ingredients {
+	&__title {
+		color: $dark-color;
+		font-weight: 600;
+		font-size: 2.4rem;
+		line-height: 3.2rem;
+	}
+	&__item {
+		color: #333;
+		padding-right: 6px;
+		padding-left: 12px;
+		position: relative;
+		font-size: 1.4rem;
+		line-height: 2rem;
 
-.ingridient:before {
-	content: '';
-	background: #333;
-	border-radius: 50%;
-	width: 4px;
-	height: 4px;
-	position: absolute;
-	top: 10px;
-	left: 4px;
-}
+		&:before {
+			content: '';
+			background: #333;
+			border-radius: 50%;
+			width: 4px;
+			height: 4px;
+			position: absolute;
+			top: 50%;
+			left: 4px;
+			transform: translateY(-50%);
+		}
 
-.ingridient:first-of-type {
-	padding-left: 0;
-}
+		&:first-of-type {
+			padding-left: 0;
 
-.ingridient:first-of-type:before {
-	display: none
+			&:before {
+				display: none
+			}
+		}
+	}
 }
 
 .form-section {
@@ -234,7 +250,7 @@
 }
 
 .success-icon .mdi:before {
-	color: $main-green;
+	color: $green-color;
 	font-size: 58px;
 }
 
@@ -246,16 +262,6 @@
 
 	&::-webkit-scrollbar {
 		display: none;
-	}
-}
-
-.pizza {
-	padding-top: 90%;
-
-	&__view {
-		position: relative;
-		margin: -90% 9% 90%;
-		list-style: none;
 	}
 }
 

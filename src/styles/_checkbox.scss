@@ -67,14 +67,14 @@
 		overflow: hidden;
 
 		&:checked+.checkbox__label {
-			border: 2px solid $main-green;
+			border: 2px solid $green-color;
 
 			.checkbox__title {
 				font-weight: 600;
 			}
 
 			.checkbox__icon {
-				color: $main-green;
+				color: $green-color;
 
 				&::before {
 					content: "\F132";

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import RadioGroup from "../RadioGroup";
 import CheckboxGroup from "../CheckboxGroup";
+import PizzaView from "../PizzaView";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { calculatePrice } from "../../helpers/calculatePrice";
@@ -46,7 +47,6 @@ const Configurator = () => {
 	}
 
 	const values = watch();
-	console.log(values)
 
 	const groupData = (groupName) => {
 		return Object.values(data).filter((item) => {
@@ -115,16 +115,7 @@ const Configurator = () => {
 					</div>
 				</div>
 				<div className="col-xl-6">
-					<div className="pizza">
-						<ul className="pizza__view">
-							<li><img src="./images/plate.png" alt="plate" /></li>
-						</ul>
-					</div>
-					<div className="row flex mb-30">
-						<div className="col">
-							<button className="btn btn-primary" >Заказать за {finalPrice} &#8381;</button>
-						</div>
-					</div>
+					<PizzaView data={data} values={values} finalPrice={finalPrice} />
 				</div>
 			</form>
 		</>

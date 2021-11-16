@@ -1,5 +1,5 @@
 import React from "react";
-import Check from "../Check";
+import IngredientsList from "../IngredientsList";
 import { useHistory } from "react-router";
 import { useForm } from "react-hook-form";
 import { postData } from "../../helpers/api";
@@ -196,7 +196,9 @@ const Order = () => {
                 </div>
             </div>
             <div className="col-6 sm-col-12">
-                <Check />
+                <div className="check mb-30">
+                    <IngredientsList price={true}/>
+                </div>
                 <button className="btn btn-primary mb-30">Оплатить {finalPrice} &#8381;</button>
             </div>
         </form>

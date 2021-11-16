@@ -29,7 +29,7 @@ const OrderList = () => {
                 <h2>Твоя пицца</h2>
                 <p>{item.size} см, {item.dough === "thin" ? "тонкое" : "пышное"} тесто</p>
                 <div className="flex flex-wrap mb-30">
-                    <span className="ingridient">
+                    <span className="ingredient">
                         {item.sauce}
                     </span>
                     { item.ingredients.join() }
