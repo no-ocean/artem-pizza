@@ -162,43 +162,6 @@
 	text-align: center;
 }
 
-.ingredients {
-	&__title {
-		color: $dark-color;
-		font-weight: 600;
-		font-size: 2.4rem;
-		line-height: 3.2rem;
-	}
-	&__item {
-		color: #333;
-		padding-right: 6px;
-		padding-left: 12px;
-		position: relative;
-		font-size: 1.4rem;
-		line-height: 2rem;
-
-		&:before {
-			content: '';
-			background: #333;
-			border-radius: 50%;
-			width: 4px;
-			height: 4px;
-			position: absolute;
-			top: 50%;
-			left: 4px;
-			transform: translateY(-50%);
-		}
-
-		&:first-of-type {
-			padding-left: 0;
-
-			&:before {
-				display: none
-			}
-		}
-	}
-}
-
 .form-section {
 	max-width: 530px;
 	padding-bottom: 30px;
