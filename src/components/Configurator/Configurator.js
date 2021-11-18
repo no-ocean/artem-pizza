@@ -63,7 +63,7 @@ const Configurator = () => {
 	};
 
 	return (
-		<>
+		<div className="container">
 			<h1 className="main-title">Собери свою пиццу</h1>
 			<form className="row" onSubmit={handleSubmit(onSubmit)}>
 				<div className="col-xl-6">
@@ -118,7 +118,7 @@ const Configurator = () => {
 					<PizzaView data={data} values={values} finalPrice={finalPrice} />
 				</div>
 			</form>
-		</>
+		</div>
 	);
 }
 

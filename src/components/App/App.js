@@ -8,36 +8,41 @@ import OrderList from "../OrderList";
 import PageNotFound from "../PageNotFound";
 import { Route, Link, Switch } from "react-router-dom";
 import OrderSuccess from "../OrderSuccess/OrderSuccess";
+import HeaderAuth from "../HeaderAuth";
 
 const App = () => {
 	return (
-		<div className="App">
-			<Header />
-			<div className="container">
-				<Switch>
-					<Route path="/login">
-						<Login />
-					</Route>
-					<Route path="/registration">
-						<Registration />
-					</Route>
-					<Route path="/orders">
-						<OrderList />
-					</Route>
-					<Route path="/order">
-						<Order />
-					</Route>
-					<Route path="/success">
-						<OrderSuccess />
-					</Route>
-					<Route exact path="/">
-						<Configurator />
-					</Route>
-					<Route>
-						<PageNotFound />
-					</Route>
-				</Switch>
-			</div>
+		<div className="app">
+			<Switch>
+				<Route path="/login">
+					<HeaderAuth />
+					<Login />
+				</Route>
+				<Route path="/registration">
+					<HeaderAuth />
+					<Registration />
+				</Route>
+				<Route path="/orders">
+					<Header />
+					<OrderList />
+				</Route>
+				<Route path="/order">
+					<Header />
+					<Order />
+				</Route>
+				<Route path="/success">
+					<Header />
+					<OrderSuccess />
+				</Route>
+				<Route exact path="/">
+					<Header />
+					<Configurator />
+				</Route>
+				<Route>
+					<Header />
+					<PageNotFound />
+				</Route>
+			</Switch>
 		</div>
 	);
 }

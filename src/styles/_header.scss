@@ -7,11 +7,37 @@
     top: 0;
     transition: all .2s ease;
     z-index: 100;
+
+    &__title {
+        color: $dark-color;
+        font-weight: 800;
+        font-size: 2.4rem;
+        line-height: 3.2rem;
+        margin: 0 auto;
+    }
 }
 
 .navbar {
     display:  flex;
     align-items: center;
+
+    &__icon {
+        margin-right: 6px;
+        transition: all .3s ease-in-out;
+    }
+
+    &__button {
+        color: $main-color;
+        display: flex;
+        align-items: center;
+        font-weight: 800;
+        font-size: 1.6rem;
+        line-height: 2.4rem;
+        text-decoration: none;
+        &:hover .navbar__icon {
+            transform: translateX(-3px);
+        }
+    }
 }
 
 .logo {
