@@ -4,6 +4,7 @@
   "description": "Online pizzeria with variety of toppings to choose and possibility to make an order",
   "private": true,
   "dependencies": {
+    "@hookform/resolvers": "^2.8.3",
     "@reduxjs/toolkit": "^1.6.1",
     "@sentry/react": "^6.4.1",
     "@sentry/tracing": "^6.4.1",
@@ -22,7 +23,8 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
     "styled-components": "^5.3.1",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.0.1",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",
